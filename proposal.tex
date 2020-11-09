@@ -1,0 +1,106 @@
+\section*{Proposal}
+
+\subsection*{Motivation and Previous Work}
+
+
+
+On the surface, the prominence of social media seems like it could make 
+the world more connected, and expose users to a dizzying variety of diverse
+ideas. However, recent studies have suggested social media encourages the
+opposite, separating individuals into groups unable to find agreement, thereby
+polarizing society. A popular explanation for this phenomenon has been coined 
+the filter bubble-- the idea that the content displayed on 
+users’ feeds is social
+media networks is simply an echo chamber that prevents people from accessing a
+diverse array of viewpoints. Since user feed content is constrained by metrics
+that aim to increase user engagement and ad revenue (i.e. friends’ and 
+followers’
+views, internet search history, user location, etc.), social media companies
+explicitly incentivize users to pay preferential attention to like-minded
+content. In this manner, users end up living in a ‘filter bubble’ of their own
+ideas. Filter bubbles have been blamed for the spread of misinformation in
+Brexit, the 2016 U.S. presidential election, and increased 
+distrust in democracy.
+
+Chitra and Musco’s paper aimed to provide a rigorous mathematical theory
+solidifying filter bubbles’ emergence, studying user opinion dynamics within
+social networks \cite{chitra_analyzing_2020}.
+Each network is modeled as a weighted graph per a \emph{stochastic
+block model}. Each node corresponds to an individual, and edges between nodes
+correspond to social relationships. The “stochastic” aspect is as follows: the 
+probability of two nodes being connected is higher 
+when the nodes are in the same
+community, and lower in different communities. Relationships between users with
+increased interactions (i.e. their respective stories pop up in their news feeds
+more often) have higher edge weights; relationships where users barely interact
+are assigned low edge weights. Chitra and Musco 
+adapted the \emph{Friedkin-Johnsen model}
+to address opinion dynamics,  augmenting each 
+node with an opinion, a real number
+in the interval [-1,1]. As time passes, each node’s opinion value is updated
+based on the average opinion of their neighbors and connections in the social
+network. Polarization is represented by the variance of opinions within the
+network, where opinions are represented as a $n$-dimensional vector.
+
+To formalize social media companies’ roles in creating filter bubbles,
+Chitra and Musco studied the influence of an important outside actor on 
+the Friedkin-Johnsen model: the \emph{network administrator}. The network
+administrator’s job is to minimize disagreement among users by 
+modifying the edge weights of the graph such that users interact
+with more content from users with similar opinions. The network
+administrator’s modifications are subject to certain constraints;
+for instance, they cannot change the degree of any vertex, 
+and they can only modify edge weights by a small amount. 
+Chitra and Musco ran experiments on the social networks Twitter
+and Reddit to simulate the effect of a network administrator
+on polarization.
+
+Their experimental results confirm filter bubble theory. 
+That is, a social network modeled by the stochastic block 
+model is, with high probability, already in a state of \emph{fragile consensus}. 
+Though a network may exhibit low polarization, a minor change in 
+edge weights can cause a shift to high polarization. 
+For example, when the network administrator changed only 
+$40\%$ of the total edge weight in the graph, polarization 
+increased by a $40$-fold factor. Chitra and Musco also demonstrated 
+a simple fix to this phenomenon. Recall that the network 
+administrator’s object was to minimize disagreement:
+$\min_G D_z$.
+They proposed a solution to add a regularization term to the objective
+(ridge regression): 
+$\min_G D_z + \lambda w^Tw$
+Their solution constrained the increase in polarization by a network
+administrator to $4\%$. 
+
+\subsection*{Research Questions}
+
+We propose the following further research directions to
+extend Chitra and Musco’s work. 
+
+\begin{enumerate}
+    \item \emph{Formalizing the network administrator’s role}: Chitra and Musco informally assert that the network 
+    administrator’s role is to minimize disagreement. Can we prove, formally, that this is the case-- i.e. 
+    solve the optimization problem? Could we prove that a “simpler” or “natural” action by the network administrator-- i.e. maintaining the overall weight of the graph, but increasing the weights between highly agreeable neighbors and decreasing the weights between disagreeing neighbors-- still converges 
+    to a more highly polarized vector of opinions? Can we prove this in a stochastic block model? What 
+    about other models? 
+    \item \emph{Dealing with outside attacks}:
+    Could we model some sort of 
+    attack by an outside actor on increasing polarization? 
+    An example is Cambridge Analytica’s role in the 2016 
+    presidential election to sway undecided voters toward 
+    electing Trump, popularized by the Netflix documentary 
+    “The Great Hack.” Here’s a simple idea: at each time step, 
+    introduce a new ‘fake’ node with an opinion. How many fake nodes,
+    and how strong of opinions, would we have to introduce to 
+    converge to a final set of opinions with higher polarization,
+    and how many time steps would that take?
+    \item \emph{Investigating Bimodality}:
+    Some suggest that polarization, 
+    defined by Chitra and Musco as the variance of the n opinions 
+    of the network’s users, might not actually be what’s increasing
+    as much as Chitra and Musco experimentally demonstrate. 
+    What’s actually going on may be more accurately explained by increasing \emph{bimodality}, where opinions converge in clusters around two centers, as opposed to opinions being further away from where we started.  In other words, we can modify Chitra and Musco’s question to: “How sensitive are social networks to bimodality?” 
+    We propose formally defining bimodality and seeing 
+    if we can obtain a similar result to the “fragile consensus”
+    linear algebraic results by Chitra and Musco. 
+\end{enumerate}
