@@ -1,5 +1,41 @@
 \documentclass{article}
 \usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage{listings}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\poly}{\textrm{poly}}
+\DeclareMathOperator*{\Rn}{\mathbb{R}^n}
+\DeclareMathOperator*{\R}{\mathbb{R}}
+
+\definecolor{teal}{rgb}{0.0,.5,.5}
+\newcommand{\teal}[1]{{\color{teal}{[{\bf teal:} #1]}}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{fact}{Fact}
+
+\graphicspath{{graphics/}}
+
+\renewcommand{\lstlistingname}{Algorithm}% Listing -> Algorithm
+\lstset{%
+    basicstyle=\small\ttfamily,
+    escapechar=~,
+    frame=single,
+    keywordstyle=\bfseries,
+    keywords={input,output,foreach,return,if,in,then,do},
+    mathescape=true,
+    morecomment=[l][\color{blue}]{\#},
+    numbers=left,
+    xleftmargin=.04\textwidth
+}
 
 \title{Filter Bubbles}
 \author{Indu Ramesh and R. Teal Witter}
@@ -9,7 +45,8 @@
 
 \maketitle
 
-\input{proposal}
+\input{files/proposal}
+\input{files/progress}
 
 \bibliography{references}
 \bibliographystyle{plain}

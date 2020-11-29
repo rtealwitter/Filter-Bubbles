@@ -1,0 +1,38 @@
+\section*{Network Administrator Actions}
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={Opinion formation with network administrator.}, label={lst:update}]
+    input: adjacency matrix $A_0$ of dimension $n\times n$,
+           initial set of opinions $s$ with $s_i \in (-1,1)$ for $i \in [n]$,
+           number of iterations $T$ to run
+    output: a set of equalibrium opinions $z^{(T)}$
+    $z^{(0)} \gets s$
+    foreach $t$ in $\{0,\ldots, T\}$ do
+        $D \gets$ degree matrix of $A_t$
+        $z^{(t)} \gets (D+I)^{-1} (A_t z^{t-1} + s)$
+        $A_t \gets$ network administrator modifications of $A_{t-1}$
+    return $z^{(T)}$
+\end{lstlisting}
+\end{minipage}
+
+``Natural'' network administrator actions:
+\begin{enumerate}
+    \item For each node $u \in [n]$,
+    add $\epsilon > 0$ to the weight of the adjacent edge closest
+    in current opinion to $u$
+    and subtract $\epsilon$ from the weights of the adjacent
+    edges furthest in current opinion from $u$ subject to the
+    constraint that each edge has at most $\delta > 0$ weight.
+\end{enumerate}
+
+\subsection*{To Do}
+\begin{itemize}
+    \item[\checkmark] Code up \autoref{lst:update}.
+    \item[\checkmark] Implement a slightly easier version of the first network
+    administrator action.
+    \item Implement the full version of the first network
+    administrator action.
+    \item Understand Equation 14 in \cite{chitra_analyzing_2020}.
+    \item Find about an administrator modification that
+    can be written in matrix notation.
+\end{itemize}
