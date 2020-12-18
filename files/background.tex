@@ -1,0 +1,129 @@
+% chktex-file 46
+
+\section{Background}
+The formulation of the polarization problem we study focuses specifically on mathematical models of opinion formation in social networks. 
+
+Social networks arise randomly, with individuals developing connections based on social groups. Thus, the natural mathematical representation of a social network is a graph. Each node represents an individual and an edge represents a friendship or connection in the network. Edges have weights associated with the extent of their friends' influence on their opinions-- in other words, the ``closeness" of the friendship. In a real-life social network like Facebook, a higher edge weight between users corresponds to a increased interactions between those users (e.g. their respective stories pop up in their news feeds more often). 
+
+\subsection{The Stochastic Block Model}
+
+In this project, we use a random graph model termed the Stochastic Block Mode (SBM) to construct a graph representing a social network. The SBM is a common generative model seen in numerous fields, including statistics, theoretical computer science, and machine learning \cite{sbm}. We refer the interested reader to \cite{sbm} for a comprehensive survey of applications of the SBM. 
+
+An SBM graph $G$ has $n$ vertices, divided into several communities.
+The probability that there is an edge between two nodes in the same community
+is $p$ while the probability there is an edge between two nodes
+in different communities is $q$.
+
+Often, we have that $p \geq q$, to model the idea that relationships
+within communities are more likely than relationships between
+communities.
+However, there are some real-world situations where $p \leq q$.
+Consider a patient-doctor network and the way opinions of
+e.g. a vaccine are formed.
+Connections representing conversations about a vaccine
+are most likely between a doctor and a patient and less
+likely between patient and patient or doctor and doctor.
+Such a model is particularly relevant to
+the acceptance of COVID-19 vaccines \cite{hoff2020patient-doctor}. When $p=q$, the SBM is known as an Erdős-Rényi graph.
+
+\subsection{Opinion Formation}
+There are two main models of opinion formation in social
+networks.
+The input to both models is a social network
+given by a graph and an innate (starting) opinion for each
+node in the graph.
+That is, each node $i$ has an innate opinion
+$s_i$ and expressed opinion (that changes according
+to the respective model) $z_i$
+where $s_i, z_i \in [-1, 1]$.
+
+\paragraph{DeGroot's Model:} Perhaps the most popular model of opinion dynamics studied, DeGroot's model updates a node's opinion with the weighted average of its expressed opinion and its friends opinions. Formally,
+\begin{align}
+    z_i^{(t)} = \frac{z_i^{(t-1)} + \sum_{j \neq i} w_{ij}z_j^{(t-1)}}{d_i + 1}
+    \nonumber
+\end{align}
+
+where $z_i^{(t)}$ is the opinion of node $i$ at iteration $t$,
+$z_i^{(t-1)}$ is the opinion of node $i$ in the previous iteration,
+and $d_i$ is the degree of node $i$ in the graph.
+\medskip \medskip
+
+\paragraph{Friedkin-Johnsen Model:} The Friedkin-Johnsen (FJ) opinion dynamics model is similar to DeGroot's Model but, instead
+of averaging with the node's own expressed opinion, averages
+with the innate opinion.
+Intuitively, FJ opinions are more `stubborn.'
+Formally,
+
+\begin{align}\label{eq:updateruleFJ}
+    z_i^{(t)} = \frac{s_i + \sum_{j \neq i}
+    w_{ij}z_j^{(t-1)}}{d_i + 1}
+\end{align}
+
+where $z_i^{(t)}$ is the opinion at iteration $t$, $s_i$ is the innate opinion of node $i$, and $d_i$ is the degree of node $i$ in the graph.
+
+We will use FJ dynamics because
+\cite{Dandekarpnas} have shown that polarization
+(formally defined in the next section)
+always converges in DeGroot's model.
+
+\subsection{Measuring Polarization}
+
+One measure of polarization with a natural mathematical interpretation is is the \emph{network disagreement} index. In \cite{Dandekarpnas}, a process is viewed as \emph{polarizing} if it increases the network disagreement index. In a social network graph $G = {V,E,w}$, the network disagreement index is calculated as follows:
+
+\begin{align}
+    \eta(G,x) = \sum_{i,j \in E} w_{ij}(x_i - x_j)^2 
+    \nonumber
+\end{align}
+
+where $x_i$ and $x_j$ are the opinions at nodes $i$ and $j$.
+
+In \cite{chitra20analyzing}, Chitra and Musco add some structure to the measure of variance. They define polarization as the \emph{variance} of a set of opinions. For a vector of $n$ opinions ${z} \in [-1,1]$, let
+
+\begin{align}
+    \E[{z}] = \frac{1}{n}\sum_{j=1}^n x_j 
+    \nonumber
+\end{align}
+
+where $z_j$ is the mean opinion of {z}. Then, polarization, $P_z$ can be defined as:
+
+\begin{align}
+    P_z = \sum_{i=1}^n (x_i - \E[{z}])^2
+    \nonumber
+\end{align}
+
+Another measure is \emph{bimodality}.
+Instead of simply of measuring the difference from the mean,
+bimodality gives a sense for whether opinions are centered
+at two different means.
+Formally, the bimodality coefficient is given by
+
+\begin{align}
+    \beta = \frac{\gamma^2 + 1}{\kappa}
+    \nonumber
+\end{align}
+
+\noindent where $\gamma$ is the \emph{skewness} (third standardized moment) and $\kappa$ is the \emph{kurtosis} (fourth standardized moment). 
+Measuring bimodality is particularly relevant to
+the modern political situation in the United States
+\cite{bromley2017tale}.
+
+\subsection{Linear Algebraic Interpretation of Polarization} 
+To analyze polarization on an SBM graph, it is helpful to have a linear algebraic interpretation of polarization. We follow the approach in  \cite{chitra20analyzing}.
+
+Let $A \in R^{n \times n}$ be the adjacency matrix of $G$, where $A_{ij} = A_{ji}$ since the graph is undirected. Let $D$ be a diagonal matrix where $D_{ii} = d_i$. That is, each diagonal entry is equal to the degree of node $i$, and the other entries are 0's. Finally, let $L = D - A$ be the \emph{Laplacian} of $G$. Recall that ${s}$ is the innate opinion vector of all nodes in $G$.
+It is not too hard to see that \cref{eq:updateruleFJ} is equivalent to
+
+\begin{align}\label{updaterulelinalg}
+    {z}^{(t)} = (D + I)^{-1}(A{z}^{(t-1)} + {s})
+    \nonumber
+\end{align}
+
+where $ {z}^{(t)} = \begin{bmatrix} z_1^{(t)} & z_2^{(t)} & \cdots & z_n^{(t)} \end{bmatrix}$. 
+
+Let ${z}^{(*)}$ be the final equilibrum opinion vector after $t$ time steps. Then 
+
+\begin{align}\label{zstar}
+    {z}^{(*)} = (L + I)^{-1}{s}.
+    \nonumber
+\end{align}
+

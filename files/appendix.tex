@@ -1,0 +1,112 @@
+\appendix
+\section{Appendix}
+
+\subsection{Proof of \cref{lemma:boundL}}\label{app:proof}
+
+We introduce several lemmas that we will use to prove
+\cref{lemma:boundL}.
+Observe that this analysis closely follows that of
+\cite{chitra20analyzing} except that we generalize it to
+the case that $q\geq p$.
+
+\begin{lemma}[Theorem 1.4 in \cite{vu05spectral}]\label{lemma:spectral}
+    There are constants $C$ and $C'$ such that the following hold.
+    Let $M_{i,j}$ be an independent random variable with mean
+    0, variance at most $\sigma^2$ for $1 \leq i \leq j \leq m$,
+    and absolute value bounded by $1$ where $\sigma \geq C' \sqrt{m} \log^2 m$.
+    Then almost surely
+    \begin{align}
+        \lambda(M) \leq 2 \sigma \sqrt{m}
+        + C \sqrt{\sigma} m^{1/4} \log m \nonumber
+    \end{align}
+    where $\lambda(M)$ denotes the spectral norm
+    (i.e. maximum singular value) of $M$.
+\end{lemma}
+
+\begin{lemma}[Extension of Lemma 4.5 in \cite{chitra20analyzing}]\label{lemma:boundA}
+    Let $A$ be the adjacency matrix of a graph drawn from the
+    SBM with intra-block probability $p$ and inter-block
+    probability $q$. Define $\bar{A} = \E[A]$.
+    There exists a universal constant $C$ such that if
+    $p \geq C \log^4 n/n$ then with probability 99/100,
+    \begin{align}
+        ||A - \bar{A}||_2 \leq 3\sqrt{n \Mpq} \nonumber.
+    \end{align}
+\end{lemma}
+
+\begin{proof}[Proof (Omitted in \cite{chitra20analyzing})]
+    Consider the matrix $M=A- \bar{A}$ with $m=2n$.
+    Each entry $M_{i,j}$ for $i\neq j$ is a binary variable with
+    probability $p$ or $q$ of firing.
+    Recall that $M_{i,i}=0$.
+    Then $\E[M_{i,j}] = \E[A_{i,j}] - \E[A]_{i,j} = 0$ and
+    the variance $\sigma^2$ is less than $\Mpq$.
+    The absolute value of each entry is bounded by 1,
+    since every entry of $A$ is either 0 or 1,
+    and every entry of $\bar{A}$ is between 0 and 1.
+    We use that $1 \geq \sqrt{\Mpq} > \sigma$ and
+    $\sqrt{\sigma} \geq C' (2n)^{1/4} \log 2n$.
+    Then \cref{lemma:spectral} yields
+    \begin{align}
+        \lambda(A - \bar{A}) &\leq 2 \sqrt{\sigma} \sqrt{2n} +
+        C \sqrt{\sigma} (2n)^{1/4} \log 2n \nonumber \\
+        &\leq 2 \sqrt{\Mpq 2n} + \frac{C}{C'}\sqrt{\sigma}\sqrt{\sigma}
+        \leq 3 \sqrt{n \Mpq} \nonumber
+    \end{align}
+    for sufficiently large $n$.
+    Since $A - \bar{A}$ is a square matrix,
+    $||A-\bar{A}|| \leq \lambda(A-\bar{A})$, which completes the proof.
+\end{proof}
+
+\begin{lemma}[Bernstein Inequality]\label{lemma:bernstein}
+    Let $X_1, \ldots, X_m$ be independent random variables
+    with variances $\sigma_1^2, \ldots, \sigma_m^2$ and
+    $|X_i| \leq 1$ almost surely for $i \in [m]$.
+    Let $X = \sum_{i \in [m]} X_i$, $\mu = \E[X]$,
+    and $\sigma^2 = \sum_{i \in [m]} \sigma_i^2$.
+    Then the following holds:
+    \begin{align}
+        \Pr (|X-\mu|>\epsilon) \leq \exp \left( \frac{e^2}
+        {2\sigma^2 + \epsilon/3} \right) \nonumber
+    \end{align}
+\end{lemma}
+
+With \cref{lemma:boundA} and \cref{lemma:bernstein},
+we can now prove \cref{lemma:boundL}.
+
+
+\begin{proof}[Proof of \cref{lemma:boundL}]
+    Let $D$ be the degree matrix of $G$ and define
+    $\E[D] = \bar{D}$. By the triangle inequality,
+    $||L - \bar{L}||_2 \leq ||D - \bar{D}||_2 +
+    ||A - \bar{A}||_2$.
+    By \cref{lemma:boundA}, $||A - \bar{A}||_2 \leq
+    3 \sqrt{n \Mpq}$.
+    Additionally, $||D - \bar{D}||_2$ is bounded
+    by $\max_{i \in [2n]} |D_{i,i} - \bar{D}_{i,i}|$.
+    $D_{i,i}$ is a sum of Bernoulli random variables
+    with total variance $\sigma^2$ upper bounded by
+    $2 n \Mpq$. It follows from \cref{lemma:bernstein}
+    and our assumption $p = \Omega(1/n)$ that
+    $|D_{i,i} - \bar{D}_{i,i}| \leq C \sqrt{n \log n \Mpq}$
+    with probability $1- 1/200n$ for
+    fixed universal constant $C$.
+    By a union bound, we have that
+    $\max_i | D_{i,i} - \bar{D}_{i,i}| \leq \sqrt{n \log n \Mpq}$
+    with probability 99/100.
+    A second union bound with the event that
+    $||A - \bar{A}||_2 \leq 3 \sqrt{n \Mpq}$ yields the lemma with
+    $C' = C+1$.
+\end{proof}
+
+\section{Supplemental Material}
+
+The code, data, and LaTeX files are all publicly
+available at \href{https://github.com/rtealwitter/Filter-Bubbles}
+{github.com/rtealwitter/Filter-Bubbles}.
+
+The two data sets we use are described below:
+\begin{itemize}
+    \item Twitter is a graph with $548$ nodes and $3638$ edges. Nodes correspond to users who posted tweets about the Delhi legislative assembly elections of 2013, and edges represent user interactions debating that election. 
+    \item Reddit is a graph with $556$ nodes and $8969$ edges. Nodes represent users who posted in the r/politics subreddit. Edges correspond to users' posts in different subreddits. In particular, two users are connected by an edge if they have both posted in two subreddits (other than r/politics) during the given time period.
+\end{itemize}

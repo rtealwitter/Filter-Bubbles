@@ -1,0 +1,46 @@
+% chktex-file 46
+
+\section{Introduction}
+
+Over the past decade, social media has transformed societal interaction. In theory, social media allows individuals and groups access to a diverse array of ideas. However, recent studies suggest that social networks are associated with societal polarization, separating individuals into groups unable to find agreement \cite{greatergood}. 
+
+A popular explanation for this phenomenon is the emergence of \emph{filter bubbles}, a term coined by internet activist Eli Pariser \cite{Pariser}. Filter bubbles reflect the idea that users’ news feeds in social media networks are simply echo chambers that prevent individuals from accessing a variety of viewpoints. Since user feed content is constrained by metrics that aim to increase user engagement and ad revenue (i.e. friends’ and followers’ views, internet search history, user location, etc.), social media companies explicitly incentivize users to pay preferential attention to like-minded content. In this manner, users end up living in a ‘filter bubble’ of their own ideas. Filter bubbles have been blamed for the spread of misinformation in Brexit, the 2016 U.S. presidential election, and increased distrust in democracy \cite{filterbubble}.
+
+In this project, we study \emph{polarization} in social networks, aiming to advance a mathematical theory behind the formation of filter bubbles. 
+
+\subsection{Related Work}
+
+Through studying various metrics and models of polarization, a mathematical theory has begun to emerge. We give a summary of interesting recent approaches and results. 
+
+In \cite{Dandekarpnas}, Dandekar et al. studied the idea of \emph{biased assimilation}: when given mixed evidence on a complex issue, individuals use that evidence to support their innate opinion, arriving at a more extreme version of their original opinion. They provided evidence that in simple models of social networks, DeGroot's model of opinion formation \cite{Degroot} results in convergence at a less diverse set of opinions, falling short of explaining polarization. They also analyzed the effects of three internet content recommendation algorithms on polarization, showing that if individuals start out sufficiently biased, these algorithms lead to increased polarization.
+
+In \cite{chitra20analyzing}, Chitra and Musco studied social media companies’ roles in creating filter bubbles using a related model of opinion formation, the Friedkin-Johnsen model \cite{fj}. They explored the effect of adding an important outside actor to the picture: the \emph{network administrator}. The network administrator’s job is to minimize disagreement among users by modifying the edge weights of the graph such that users interact with more content from users with similar opinions. In their model, the network administrator’s modifications are subject to certain constraints: the administrator cannot change the degree of any vertex, and can only modify edge weights by a small amount. Chitra and Musco ran experiments on the social networks Twitter and Reddit to simulate the effect of a network administrator on polarization. Their experimental results confirm filter bubble theory, and they show that there is a network administrator action that leads to increased polarization.
+
+Other formulations and solutions to the polarization problem have been studied. In \cite{muscomusco}, Musco et al. asked: what is the \emph{topological structure} of a network that minimizes both polarization and disagreement, given an opinion dynamics model? They posed this question as an optimization problem, and gave a polynomial-time algorithm that approximates the optimum for a fixed graph. In \cite{algorithmfilterbubbles}, Matakos et al. formulated polarization as an influence maximization problem, providing an approximation algorithm to break up filter bubbles. 
+
+Finally, consider that the work we mentioned has addressed the question: how sensitive are networks to polarization? Chitra and Musco's results in \cite{chitra20analyzing} suggest that many networks are in a state of \emph{fragile consensus}. The Netflix documentary ``The Great Hack" \cite{Netflix} discusses Cambridge Analytica’s role in the 2016 presidential election, swaying undecided voters toward electing Trump through targeted intervention on Facebook. Could we exploit this sensitivity, and model some sort of attack by an outside actor on increasing polarization? 
+
+
+\subsection{Overview of Results}
+
+In this project, we study polarization in the Friedkin-Johnson (FJ) dynamics model, formally defined below.
+In \cref{sec:experiments}, we present empirical results
+on the impacts of several additions to the FJ opinion formation
+process.
+Notably, we introduce two natural network administrator
+actions and describe their effects on social networks.
+In \cref{sec:theory}, we extend the results of
+\cite{chitra20analyzing}.
+In particular, we show that the polarization of the
+equilibrium opinions after running FJ dynamics
+on the Stochastic Block Model (SBM) defined below
+converges with high probability for any mean-centered
+innate opinions (rather than the half 1, half -1 innate
+opinions considered before).
+When the graph is in the special case of 
+an Erdős–Rényi our bounds are even stronger.
+Finally, we discuss our work and provide directions
+for future work in \cref{sec:conclusion}.
+
+
+

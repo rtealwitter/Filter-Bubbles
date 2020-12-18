@@ -9,18 +9,26 @@
 \usepackage{enumitem}
 \usepackage{bbm}
 \usepackage{listings}
+\usepackage{cleveref}
+\usepackage{subcaption}
 
-\DeclareMathOperator{\tr}{tr}
-\DeclareMathOperator*{\poly}{\textrm{poly}}
-\DeclareMathOperator*{\Rn}{\mathbb{R}^n}
 \DeclareMathOperator*{\R}{\mathbb{R}}
+\DeclareMathOperator*{\E}{\mathbb{E}}
+\DeclareMathOperator*{\Pz}{\mathcal{P}_{z^*}}
+\DeclareMathOperator*{\Mpq}{\max \{p, q\}}
 
 \definecolor{teal}{rgb}{0.0,.5,.5}
 \newcommand{\teal}[1]{{\color{teal}{[{\bf teal:} #1]}}}
 
 \newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{fact}{Fact}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\crefname{section}{Section}{Sections}
+\crefname{equation}{Equation}{Equations}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{listing}{Listing}{Listings}
+\crefname{figure}{Figure}{Figures}
 
 \graphicspath{{graphics/}}
 
@@ -45,10 +53,17 @@
 
 \maketitle
 
-\input{files/proposal}
-\input{files/progress}
+%\input{files/proposal}
+%\input{files/progress}
+\input{files/introduction}
+\input{files/background}
+\input{files/experiments}
+\input{files/theory}
+\input{files/conclusion}
 
 \bibliography{references}
 \bibliographystyle{plain}
+
+\input{files/appendix}
 
 \end{document}
