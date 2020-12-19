@@ -4,11 +4,11 @@
 
 It is often challenging to mathematically analyze
 variations on the opinion formation process, so we simulate
-them instead.
+them instead. We analyze the effects of two network administrator actions on polarization and bimodality in SBM graphs and two real-world networks, Reddit and Twitter. 
 The variations we consider include:
 network administrator actions, attack nodes,
 imbalanced innate opinions, and three (rather than two)
-blocks in the Stochastic Block Model (SBM).
+blocks in the Stochastic Block Model (SBM). 
 
 \cref{lst:overview} presents the baseline
 pseudocode we use for our experiments.
@@ -18,9 +18,9 @@ pseudocode we use for our experiments.
 input: adjacency matrix $A_0$ of dimension $n\times n$,
         innate set of opinions $s$ with $s_i \in [-1,1]$ for $i \in [n]$,
         number of iterations $T$ to run
-output: a set of equalibrium opinions $z^{(T)}$
+output: a set of equilibrium opinions $z^{(T)}$
 $z^{(0)} \gets s$
-foreach $t$ in $\{0,\ldots, T\}$ do
+for each $t$ in $\{0,\ldots, T\}$ do
     $D \gets$ degree matrix of $A_t$
     $z^{(t)} \gets (D+I)^{-1} (A_t z^{t-1} + s)$
     $A_t \gets$ network administrator modifications of $A_{t-1}$
@@ -140,6 +140,8 @@ Nonetheless, analyzing it provides insight into an
 intuitive idea and the extremes of a potential
 administrator action.
 
+\pagebreak
+
 \subsection{Scaled Administrator Action}
 The other administrator action we consider
 is a less extreme variation.
@@ -243,7 +245,8 @@ and the increase in polarization is negligible.
 
 \subsection{Miscellaneous Variations}
 
-In this section, we analyze the following variations:
+In this section, we analyze the following variations and 
+their effects on bimodality:
 attacker nodes with an extreme opinion that do not update
 their own opinion, three stochastic blocks rather than two,
 and an imbalanced opinion (1/3-2/3 vs 1/2-1/2).
@@ -269,29 +272,3 @@ This makes sense given that the three blocks are centered
 at .5, 0, -.5 respectively rather than the more polarized
 .5 and -.5.
 
-%We experimentally evaluated two network administrator actions, updateExtreme and updateScale, on random graphs generated via the stochastic block model and two real-world networks. These real-world datasets have previously been utilized to study polarization in \cite{datasets}, \cite{muscomusco}, and \cite{chitra20analyzing}, and we obtained the datasets from those authors. 
-%
-%\subsection{Datasets}
-%\paragraph{Twitter} is a graph with $548$ nodes and $3638$ edges. Nodes correspond to users who posted tweets about the Delhi legislative assembly elections of 2013, and edges represent user interactions debating that election. 
-%
-%\paragraph{Reddit} is a graph with $556$ nodes and $8969$ edges. Nodes represent users who posted in the r/politics subreddit. Edges correspond to users' posts in different subreddits. In particular, two users are connected by an edge if they have both posted in two subreddits (other than r/politics) during the given time period.
-%
-%\paragraph{}In both networks, each user has multiple opinions associated to them, analyzed via their posts. We used a similar data extraction method to \cite{chitra20analyzing}, averaging each opinion to give an equilibrium vector for each user. When all innate opinions are collected into vector $s$, the vector is mapped into the interval $[-1,1]$.
-%
-%\subsection{Network Administrator Actions}
-%
-%We describe the network administrator algorithms we implemented and experimentally evaluated. 
-%
-%\paragraph{updateExtreme} 
-%\begin{enumerate}
-    %\item For each node $u \in [n]$,
-    %add $\epsilon > 0$ to the weight of the adjacent edge closest
-    %in current opinion to $u$
-    %and subtract $\epsilon$ from the weights of the adjacent
-    %edges furthest in current opinion from $u$ subject to the
-    %constraint that each edge has at most $\delta > 0$ weight.
-%\end{enumerate}
-%
-%\paragraph{updateScale} 
-%
-%\subsection{Results}

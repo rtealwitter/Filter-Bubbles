@@ -195,6 +195,10 @@ def visualize2(series, labels, filename, title='Measures of Social Cohesion by T
 import csv
 
 # Read real world data
+
+#####################################################
+# READ REDDIT
+#####################################################
 def readReddit(path):
     # load adjacency matrix
     n_reddit=556

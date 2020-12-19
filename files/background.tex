@@ -1,6 +1,6 @@
 % chktex-file 46
 
-\section{Background}
+\section{Background and Preliminaries}
 The formulation of the polarization problem we study focuses specifically on mathematical models of opinion formation in social networks. 
 
 Social networks arise randomly, with individuals developing connections based on social groups. Thus, the natural mathematical representation of a social network is a graph. Each node represents an individual and an edge represents a friendship or connection in the network. Edges have weights associated with the extent of their friends' influence on their opinions-- in other words, the ``closeness" of the friendship. In a real-life social network like Facebook, a higher edge weight between users corresponds to a increased interactions between those users (e.g. their respective stories pop up in their news feeds more often). 
@@ -77,7 +77,7 @@ One measure of polarization with a natural mathematical interpretation is is the
 
 where $x_i$ and $x_j$ are the opinions at nodes $i$ and $j$.
 
-In \cite{chitra20analyzing}, Chitra and Musco add some structure to the measure of variance. They define polarization as the \emph{variance} of a set of opinions. For a vector of $n$ opinions ${z} \in [-1,1]$, let
+In \cite{chitra20analyzing}, Chitra and Musco add some structure to the measure of polarization. They define polarization as the \emph{variance} of a set of opinions. For a vector of $n$ opinions ${z} \in [-1,1]$, let
 
 \begin{align}
     \E[{z}] = \frac{1}{n}\sum_{j=1}^n x_j 
@@ -107,15 +107,14 @@ Measuring bimodality is particularly relevant to
 the modern political situation in the United States
 \cite{bromley2017tale}.
 
-\subsection{Linear Algebraic Interpretation of Polarization} 
-To analyze polarization on an SBM graph, it is helpful to have a linear algebraic interpretation of polarization. We follow the approach in  \cite{chitra20analyzing}.
+\subsection{Linear Algebraic Interpretation of FJ Opinion Dynamics} 
+To analyze polarization on an SBM graph, it is helpful to have a linear algebraic interpretation of FJ opinion dynamics. We follow the approach in  \cite{chitra20analyzing}.
 
 Let $A \in R^{n \times n}$ be the adjacency matrix of $G$, where $A_{ij} = A_{ji}$ since the graph is undirected. Let $D$ be a diagonal matrix where $D_{ii} = d_i$. That is, each diagonal entry is equal to the degree of node $i$, and the other entries are 0's. Finally, let $L = D - A$ be the \emph{Laplacian} of $G$. Recall that ${s}$ is the innate opinion vector of all nodes in $G$.
 It is not too hard to see that \cref{eq:updateruleFJ} is equivalent to
 
 \begin{align}\label{updaterulelinalg}
     {z}^{(t)} = (D + I)^{-1}(A{z}^{(t-1)} + {s})
-    \nonumber
 \end{align}
 
 where $ {z}^{(t)} = \begin{bmatrix} z_1^{(t)} & z_2^{(t)} & \cdots & z_n^{(t)} \end{bmatrix}$. 
@@ -124,6 +123,5 @@ Let ${z}^{(*)}$ be the final equilibrum opinion vector after $t$ time steps. The
 
 \begin{align}\label{zstar}
     {z}^{(*)} = (L + I)^{-1}{s}.
-    \nonumber
 \end{align}
 
